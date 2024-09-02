@@ -10,6 +10,7 @@ contract MerkleAirdrop {
 
 
     mapping (address => bool) isClaimed;
+    event AirdropClaimed(address _address, uint256 amount);
 
     constructor(address _tokenAddress, bytes32 _root) {
         root = _root;
@@ -24,5 +25,6 @@ contract MerkleAirdrop {
         //Send Amount to The address
         isClaimed[addr] = true;
         require(giftToken.transfer(msg.sender, amount), "Airdrop Claming Failed");
+        emit AirdropClaimed(msg.sender, amount);
     }
 }
