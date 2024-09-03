@@ -2,7 +2,7 @@ import { StandardMerkleTree } from "@openzeppelin/merkle-tree"; //Import the mer
 import fs from "fs"; //Import file system.
 import csv from "csv-parser"; //Import csv-parser for ready csv
 
-const values = []; //Array to save values from csv
+const values: any = []; //Array to save values from csv
 fs.createReadStream('airdrop.csv') //Read csv file called airdrop.csv
   .pipe(csv())
   .on('data', (row) => {
