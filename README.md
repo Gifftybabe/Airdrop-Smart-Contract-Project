@@ -1,68 +1,85 @@
+Here's a simple and professional `README.md` file for your project:
 
-# Merkle Airdrop 
+---
 
-This repository contains smart contracts for managing an ERC20 token and a Merkle tree-based airdrop, along with deployment scripts using Hardhat.
+# Airdrop Contract and Token
 
-## Overview
+This repository contains the Solidity code and associated scripts for an Airdrop system. The project consists of two main components: the `AirdropContract` and the `AirdropToken`. The `AirdropContract` facilitates the distribution of ERC20 tokens to eligible users using a Merkle Tree for verification. The `AirdropToken` is the ERC20 token being distributed.
 
-### Contracts
+## Project Structure
 
-1. **MerkleAirdrop**
-   - **Purpose**: Facilitates an airdrop of ERC20 tokens based on a Merkle tree proof.
-   - **Features**:
-     - Allows users to claim airdrops if they provide a valid Merkle proof.
-     - Ensures that each address can claim the airdrop only once.
-   
-2. **NGToken**
-   - **Purpose**: A standard ERC20 token with minting capabilities.
-   - **Features**:
-     - Provides an initial supply of tokens to the deployer.
-     - Allows the owner to mint additional tokens.
+- **Contracts**:
+  - `AirdropContract.sol`: A smart contract that manages the airdrop process, allowing users to claim tokens if they are eligible.
+  - `AirdropToken.sol`: An ERC20 token contract that represents the token being distributed.
 
-## Setup and Deployment
+- **Deployment Scripts**:
+  - `AirdropTokenModule.js`: Hardhat Ignition module for deploying the `AirdropToken` contract.
+  - `AirdropContractModule.js`: Hardhat Ignition module for deploying the `AirdropContract` with the specified token address and Merkle root hash.
+
+- **Merkle Tree Generator**:
+  - `generateMerkleTree.js`: A script that reads a CSV file, generates a Merkle Tree, and outputs the Merkle root and proofs for each eligible user.
+
+- **Tests**:
+  - `MerkleAirdropHe.js`: Unit tests for the airdrop contract to ensure proper functionality, including verification of eligibility and token claims.
+
+## Setup Instructions
 
 ### Prerequisites
 
-- **Node.js**: Ensure you have [Node.js](https://nodejs.org/) installed.
-- **Hardhat**: Install Hardhat by following the [Hardhat installation guide](https://hardhat.org/getting-started/).
+- [Node.js](https://nodejs.org/)
+- [Hardhat](https://hardhat.org/)
+- [OpenZeppelin Contracts](https://docs.openzeppelin.com/contracts/)
 
 ### Installation
 
-1. **Clone the Repository**
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/Gifftybabe/Airdrop-Smart-Contract-Project.git
+    cd Airdrop-Smart-Contract
+    ```
 
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>
-   ```
+2. Install the dependencies:
+    ```sh
+    npm install
+    ```
 
-2. **Install Dependencies**
+### Usage
 
-   ```bash
-   npm install
-   ```
+1. **Compile the Contracts**:
+    ```sh
+    npx hardhat compile
+    ```
 
-### Deployment
+2. **Deploy the Contracts**:
+   - Deploy `AirdropToken`:
+     ```sh
+     npx hardhat run scripts/deployAirdropToken.js
+     ```
+   - Deploy `AirdropContract`:
+     ```sh
+     npx hardhat run scripts/deployAirdropContract.js
+     ```
 
-To deploy the contracts, use the provided Hardhat scripts. Modify the scripts with appropriate network settings before deployment.
+3. **Generate Merkle Tree**:
+   - Place your eligible addresses and amounts in a CSV file.
+   - Run the Merkle tree generator:
+     ```sh
+     node scripts/generateMerkleTree.js path/to/your-file.csv
+     ```
 
-1. **Deploy the Merkle Airdrop Contract**
+4. **Run Tests**:
+    ```sh
+    npx hardhat test
+    ```
 
-   ```bash
-   npx hardhat run scripts/deployMerkleAirdrop.ts --network <network>
-   ```
+### Contract Features
 
-2. **Deploy the NGToken Contract**
+- **AirdropContract**:
+  - Handles token deposits and withdrawals.
+  - Uses Merkle Tree to verify user eligibility before allowing token claims.
+  - Admin (owner) can update the Merkle root or withdraw remaining tokens.
 
-   ```bash
-   npx hardhat run scripts/deployNGToken.ts --network <network>
-   ```
+- **AirdropToken**:
+  - An ERC20 token with an initial supply of 100,000 tokens.
+  - Allows the owner to mint additional tokens.
 
-Replace `<network>` with the desired network (e.g., `rinkeby`, `mainnet`).
-
-## Usage
-
-- **MerkleAirdrop Contract**: Users can claim tokens by providing a valid Merkle proof and their address.
-- **NGToken Contract**: Allows minting of tokens by the contract owner.
-
-
--
