@@ -1,15 +1,22 @@
-
+const  HardhatUserConfig  =  require("hardhat/config");
 require("@nomicfoundation/hardhat-toolbox");
 const dotenv = require("dotenv");
 dotenv.config();
 
-/** @type import('hardhat/config').HardhatUserConfig */
-module.exports = {
-  solidity: "0.8.26",
+const config = {
+  solidity: {
+    version: "0.8.20",
+    settings: {
+        optimizer: {
+            enabled: true,
+            runs: 200
+        }
+    }
+},
   networks: {
     // for testnet
     "lisk-sepolia": {
-      url: "https://rpc.sepolia-api.lisk.com",
+      url: process.env.LISK_RPC_URL,
       accounts: [process.env.PRIVATE_KEY],
       gasPrice: 1000000000,
     },
@@ -25,7 +32,7 @@ module.exports = {
         chainId: 4202,
         urls: {
           apiURL: "https://sepolia-blockscout.lisk.com/api",
-          browserURL: "https://sepolia-blockscout.lisk.com",
+          browserURL: "https://sepolia-blockscout.lisk.com/",
         },
       },
     ],
@@ -34,3 +41,8 @@ module.exports = {
     enabled: false,
   },
 };
+
+module.exports = config;
+
+
+
